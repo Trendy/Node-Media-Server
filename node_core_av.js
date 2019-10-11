@@ -96,24 +96,24 @@ function readAACSpecificConfig(aacSequenceHeader) {
 
 function getAACProfileName(info) {
   switch (info.object_type) {
-    case 1:
-      return 'Main';
-    case 2:
-      if (info.ps > 0) {
-        return 'HEv2';
-      }
-      if (info.sbr > 0) {
-        return 'HE';
-      }
-      return 'LC';
-    case 3:
-      return 'SSR';
-    case 4:
-      return 'LTP';
-    case 5:
-      return 'SBR';
-    default:
-      return '';
+  case 1:
+    return 'Main';
+  case 2:
+    if (info.ps > 0) {
+      return 'HEv2';
+    }
+    if (info.sbr > 0) {
+      return 'HE';
+    }
+    return 'LC';
+  case 3:
+    return 'SSR';
+  case 4:
+    return 'LTP';
+  case 5:
+    return 'SBR';
+  default:
+    return '';
   }
 }
 
@@ -199,31 +199,31 @@ function readH264SpecificConfig(avcSequenceHeader) {
 
     /* pic order cnt type */
     switch (bitop.read_golomb()) {
-      case 0:
+    case 0:
 
-        /* max pic order cnt */
+      /* max pic order cnt */
+      bitop.read_golomb();
+      break;
+
+    case 1:
+
+      /* delta pic order alwys zero */
+      bitop.read(1);
+
+      /* offset for non-ref pic */
+      bitop.read_golomb();
+
+      /* offset for top to bottom field */
+      bitop.read_golomb();
+
+      /* num ref frames in pic order */
+      num_ref_frames = bitop.read_golomb();
+
+      for (n = 0; n < num_ref_frames; n++) {
+
+        /* offset for ref frame */
         bitop.read_golomb();
-        break;
-
-      case 1:
-
-        /* delta pic order alwys zero */
-        bitop.read(1);
-
-        /* offset for non-ref pic */
-        bitop.read_golomb();
-
-        /* offset for top to bottom field */
-        bitop.read_golomb();
-
-        /* num ref frames in pic order */
-        num_ref_frames = bitop.read_golomb();
-
-        for (n = 0; n < num_ref_frames; n++) {
-
-          /* offset for ref frame */
-          bitop.read_golomb();
-        }
+      }
     }
 
     /* num ref frames */
@@ -298,7 +298,7 @@ function HEVCParsePtl(bitop, hevc, max_sub_layers_minus1) {
 
   if (max_sub_layers_minus1 > 0) {
     for (let i = max_sub_layers_minus1; i < 8; i++) {
-      bitop.read(2)
+      bitop.read(2);
     }
   }
 
@@ -473,20 +473,20 @@ function readAVCSpecificConfig(avcSequenceHeader) {
 
 function getAVCProfileName(info) {
   switch (info.profile) {
-    case 1:
-      return 'Main';
-    case 2:
-      return 'Main 10';
-    case 3:
-      return 'Main Still Picture';
-    case 66:
-      return 'Baseline';
-    case 77:
-      return 'Main';
-    case 100:
-      return 'High';
-    default:
-      return '';
+  case 1:
+    return 'Main';
+  case 2:
+    return 'Main 10';
+  case 3:
+    return 'Main Still Picture';
+  case 66:
+    return 'Baseline';
+  case 77:
+    return 'Main';
+  case 100:
+    return 'High';
+  default:
+    return '';
   }
 }
 

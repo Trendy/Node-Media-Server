@@ -7,7 +7,6 @@ const Logger = require('./node_core_logger');
 
 const Net = require('net');
 const NodeRtmpSession = require('./node_rtmp_session');
-const NodeCoreUtils = require('./node_core_utils');
 
 const context = require('./node_core_ctx');
 
@@ -19,7 +18,7 @@ class NodeRtmpServer {
     this.tcpServer = Net.createServer((socket) => {
       let session = new NodeRtmpSession(config, socket);
       session.run();
-    })
+    });
   }
 
   run() {
@@ -38,11 +37,11 @@ class NodeRtmpServer {
 
   stop() {
     this.tcpServer.close();
-    context.sessions.forEach((session, id) => {
+    context.sessions.forEach((session) => {
       if (session instanceof NodeRtmpSession)
         session.stop();
     });
   }
 }
 
-module.exports = NodeRtmpServer
+module.exports = NodeRtmpServer;

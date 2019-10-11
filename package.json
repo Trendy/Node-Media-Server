@@ -4,7 +4,9 @@
   "description": "A Node.js implementation of RTMP Server",
   "main": "node_media_server.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "node app.js",
+    "lint": "eslint \"**/*.js\"",
+    "lint:fix": "eslint --fix \"**/*.js\""
   },
   "repository": {
     "type": "git",
